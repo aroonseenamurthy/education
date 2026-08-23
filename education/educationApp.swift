@@ -9,7 +9,7 @@ import SwiftUI
 import CoreData
 
 @main
-struct educationApp: App {
+struct TinyLearnApp: App {
     let persistenceController = PersistenceController.shared
 
     var body: some Scene {
