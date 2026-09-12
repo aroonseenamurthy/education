@@ -44,7 +44,13 @@ private let alphabetCards: [AlphabetCard] = [
 
 struct AlphabetFlashcardsView: View {
     @State private var currentIndex = 0
+    @StateObject private var speech = SpeechManager()
     @Environment(\.dismiss) private var dismiss
+
+    private func speakCard(_ index: Int) {
+        let card = alphabetCards[index]
+        speech.speakAlphabetCard(letter: card.letter, word: card.word)
+    }
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -56,15 +62,31 @@ struct AlphabetFlashcardsView: View {
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
             .ignoresSafeArea()
+            .onAppear { speakCard(0) }
+            .onChange(of: currentIndex) { _, newIndex in speakCard(newIndex) }
 
-            Text("\(currentIndex + 1)  of  \(alphabetCards.count)")
-                .font(.system(size: 18, weight: .semibold, design: .rounded))
-                .foregroundStyle(.white.opacity(0.75))
-                .padding(.bottom, 36)
+            // Progress + replay row
+            HStack {
+                Spacer()
+                Text("\(currentIndex + 1)  of  \(alphabetCards.count)")
+                    .font(.system(size: 18, weight: .semibold, design: .rounded))
+                    .foregroundStyle(.white.opacity(0.75))
+                Spacer()
+                Button { speakCard(currentIndex) } label: {
+                    Image(systemName: "speaker.wave.2.fill")
+                        .font(.system(size: 20, weight: .bold))
+                        .foregroundStyle(.white)
+                        .padding(12)
+                        .background(.white.opacity(0.25))
+                        .clipShape(Circle())
+                }
+            }
+            .padding(.horizontal, 24)
+            .padding(.bottom, 36)
         }
         .navigationBarBackButtonHidden(true)
         .overlay(alignment: .topLeading) {
-            Button { dismiss() } label: {
+            Button { speech.stop(); dismiss() } label: {
                 Image(systemName: "chevron.left")
                     .font(.system(size: 20, weight: .bold))
                     .foregroundStyle(.white)
