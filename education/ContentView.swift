@@ -87,6 +87,28 @@ struct ContentView: View {
                                 )
                             }
                             .buttonStyle(.plain)
+
+                            NavigationLink(destination: FruitsVeggiesFlashcardsView()) {
+                                CategoryCard(
+                                    title: "Fruits & Veggies",
+                                    subtitle: "20 items",
+                                    emoji: "🍎",
+                                    colors: [Color(red: 0.18, green: 0.58, blue: 0.28),
+                                             Color(red: 0.38, green: 0.78, blue: 0.32)]
+                                )
+                            }
+                            .buttonStyle(.plain)
+
+                            NavigationLink(destination: BodyPartsFlashcardsView()) {
+                                CategoryCard(
+                                    title: "Body Parts",
+                                    subtitle: "18 parts",
+                                    emoji: "🧑",
+                                    colors: [Color(red: 0.85, green: 0.42, blue: 0.55),
+                                             Color(red: 0.92, green: 0.60, blue: 0.62)]
+                                )
+                            }
+                            .buttonStyle(.plain)
                         }
                         .padding(.horizontal, 28)
                         .padding(.bottom, 24)
