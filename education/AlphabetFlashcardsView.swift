@@ -44,12 +44,20 @@ private let alphabetCards: [AlphabetCard] = [
 
 struct AlphabetFlashcardsView: View {
     @State private var currentIndex = 0
+    @State private var showCelebration = false
     @StateObject private var speech = SpeechManager()
     @Environment(\.dismiss) private var dismiss
 
     private func speakCard(_ index: Int) {
         let card = alphabetCards[index]
         speech.speakAlphabetCard(letter: card.letter, word: card.word)
+    }
+
+    private func celebrate() {
+        withAnimation(.spring(response: 0.5, dampingFraction: 0.7)) { showCelebration = true }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+            withAnimation(.easeOut(duration: 0.4)) { showCelebration = false }
+        }
     }
 
     var body: some View {
@@ -63,7 +71,10 @@ struct AlphabetFlashcardsView: View {
             .tabViewStyle(.page(indexDisplayMode: .never))
             .ignoresSafeArea()
             .onAppear { speakCard(0) }
-            .onChange(of: currentIndex) { _, newIndex in speakCard(newIndex) }
+            .onChange(of: currentIndex) { _, newIndex in
+                speakCard(newIndex)
+                if newIndex == alphabetCards.count - 1 { celebrate() }
+            }
 
             // Progress + replay row
             HStack {
@@ -96,6 +107,9 @@ struct AlphabetFlashcardsView: View {
             }
             .padding(.top, 56)
             .padding(.leading, 20)
+        }
+        .overlay {
+            CelebrationOverlay(isShowing: showCelebration)
         }
     }
 }

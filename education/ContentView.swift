@@ -7,6 +7,28 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
+        TabView {
+            BasicsView()
+                .tabItem {
+                    Label("Basics", systemImage: "square.grid.2x2.fill")
+                }
+
+            MathBasicsHomeView()
+                .tabItem {
+                    Label("Math Basics", systemImage: "plus.forwardslash.minus")
+                }
+        }
+    }
+}
+
+struct CategoryScreen<Content: View>: View {
+    let content: Content
+
+    init(@ViewBuilder content: () -> Content) {
+        self.content = content()
+    }
+
+    var body: some View {
         NavigationStack {
             ZStack {
                 LinearGradient(
@@ -33,82 +55,7 @@ struct ContentView: View {
                     // Scrollable category cards
                     ScrollView(showsIndicators: false) {
                         VStack(spacing: 18) {
-                            NavigationLink(destination: AlphabetFlashcardsView()) {
-                                CategoryCard(
-                                    title: "Alphabets",
-                                    subtitle: "A  to  Z",
-                                    emoji: "🔤",
-                                    colors: [Color(red: 0.92, green: 0.28, blue: 0.28),
-                                             Color(red: 0.95, green: 0.52, blue: 0.28)]
-                                )
-                            }
-                            .buttonStyle(.plain)
-
-                            NavigationLink(destination: NumberFlashcardsView()) {
-                                CategoryCard(
-                                    title: "Numbers",
-                                    subtitle: "1  to  100",
-                                    emoji: "🔢",
-                                    colors: [Color(red: 0.22, green: 0.48, blue: 0.92),
-                                             Color(red: 0.28, green: 0.72, blue: 0.88)]
-                                )
-                            }
-                            .buttonStyle(.plain)
-
-                            NavigationLink(destination: ColorsFlashcardsView()) {
-                                CategoryCard(
-                                    title: "Colors",
-                                    subtitle: "12 colors",
-                                    emoji: "🎨",
-                                    colors: [Color(red: 0.55, green: 0.18, blue: 0.78),
-                                             Color(red: 0.92, green: 0.38, blue: 0.62)]
-                                )
-                            }
-                            .buttonStyle(.plain)
-
-                            NavigationLink(destination: ShapesFlashcardsView()) {
-                                CategoryCard(
-                                    title: "Shapes",
-                                    subtitle: "11 shapes",
-                                    emoji: "🔷",
-                                    colors: [Color(red: 0.12, green: 0.58, blue: 0.42),
-                                             Color(red: 0.18, green: 0.75, blue: 0.55)]
-                                )
-                            }
-                            .buttonStyle(.plain)
-
-                            NavigationLink(destination: AnimalsFlashcardsView()) {
-                                CategoryCard(
-                                    title: "Animals",
-                                    subtitle: "20 animals",
-                                    emoji: "🐾",
-                                    colors: [Color(red: 0.78, green: 0.42, blue: 0.12),
-                                             Color(red: 0.92, green: 0.65, blue: 0.18)]
-                                )
-                            }
-                            .buttonStyle(.plain)
-
-                            NavigationLink(destination: FruitsVeggiesFlashcardsView()) {
-                                CategoryCard(
-                                    title: "Fruits & Veggies",
-                                    subtitle: "20 items",
-                                    emoji: "🍎",
-                                    colors: [Color(red: 0.18, green: 0.58, blue: 0.28),
-                                             Color(red: 0.38, green: 0.78, blue: 0.32)]
-                                )
-                            }
-                            .buttonStyle(.plain)
-
-                            NavigationLink(destination: BodyPartsFlashcardsView()) {
-                                CategoryCard(
-                                    title: "Body Parts",
-                                    subtitle: "18 parts",
-                                    emoji: "🧑",
-                                    colors: [Color(red: 0.85, green: 0.42, blue: 0.55),
-                                             Color(red: 0.92, green: 0.60, blue: 0.62)]
-                                )
-                            }
-                            .buttonStyle(.plain)
+                            content
                         }
                         .padding(.horizontal, 28)
                         .padding(.bottom, 24)
@@ -121,6 +68,128 @@ struct ContentView: View {
                 }
             }
             .navigationBarHidden(true)
+        }
+    }
+}
+
+struct BasicsView: View {
+    var body: some View {
+        CategoryScreen {
+            NavigationLink(destination: AlphabetFlashcardsView()) {
+                CategoryCard(
+                    title: "Alphabets",
+                    subtitle: "A  to  Z",
+                    emoji: "🔤",
+                    colors: [Color(red: 0.92, green: 0.28, blue: 0.28),
+                             Color(red: 0.95, green: 0.52, blue: 0.28)]
+                )
+            }
+            .buttonStyle(.plain)
+
+            NavigationLink(destination: NumberFlashcardsView()) {
+                CategoryCard(
+                    title: "Numbers",
+                    subtitle: "1  to  100",
+                    emoji: "🔢",
+                    colors: [Color(red: 0.22, green: 0.48, blue: 0.92),
+                             Color(red: 0.28, green: 0.72, blue: 0.88)]
+                )
+            }
+            .buttonStyle(.plain)
+
+            NavigationLink(destination: ColorsFlashcardsView()) {
+                CategoryCard(
+                    title: "Colors",
+                    subtitle: "12 colors",
+                    emoji: "🎨",
+                    colors: [Color(red: 0.55, green: 0.18, blue: 0.78),
+                             Color(red: 0.92, green: 0.38, blue: 0.62)]
+                )
+            }
+            .buttonStyle(.plain)
+
+            NavigationLink(destination: ShapesFlashcardsView()) {
+                CategoryCard(
+                    title: "Shapes",
+                    subtitle: "11 shapes",
+                    emoji: "🔷",
+                    colors: [Color(red: 0.12, green: 0.58, blue: 0.42),
+                             Color(red: 0.18, green: 0.75, blue: 0.55)]
+                )
+            }
+            .buttonStyle(.plain)
+
+            NavigationLink(destination: AnimalsFlashcardsView()) {
+                CategoryCard(
+                    title: "Animals",
+                    subtitle: "20 animals",
+                    emoji: "🐾",
+                    colors: [Color(red: 0.78, green: 0.42, blue: 0.12),
+                             Color(red: 0.92, green: 0.65, blue: 0.18)]
+                )
+            }
+            .buttonStyle(.plain)
+
+            NavigationLink(destination: FruitsVeggiesFlashcardsView()) {
+                CategoryCard(
+                    title: "Fruits & Veggies",
+                    subtitle: "20 items",
+                    emoji: "🍎",
+                    colors: [Color(red: 0.18, green: 0.58, blue: 0.28),
+                             Color(red: 0.38, green: 0.78, blue: 0.32)]
+                )
+            }
+            .buttonStyle(.plain)
+
+            NavigationLink(destination: BodyPartsFlashcardsView()) {
+                CategoryCard(
+                    title: "Body Parts",
+                    subtitle: "18 parts",
+                    emoji: "🧑",
+                    colors: [Color(red: 0.85, green: 0.42, blue: 0.55),
+                             Color(red: 0.92, green: 0.60, blue: 0.62)]
+                )
+            }
+            .buttonStyle(.plain)
+
+            NavigationLink(destination: SightWordsFlashcardsView()) {
+                CategoryCard(
+                    title: "Sight Words",
+                    subtitle: "20 words",
+                    emoji: "📖",
+                    colors: [Color(red: 0.22, green: 0.42, blue: 0.78),
+                             Color(red: 0.32, green: 0.62, blue: 0.85)]
+                )
+            }
+            .buttonStyle(.plain)
+
+            NavigationLink(destination: CalendarFlashcardsView()) {
+                CategoryCard(
+                    title: "Days & Months",
+                    subtitle: "Days, months, seasons",
+                    emoji: "📅",
+                    colors: [Color(red: 0.22, green: 0.55, blue: 0.82),
+                             Color(red: 0.62, green: 0.32, blue: 0.72)]
+                )
+            }
+            .buttonStyle(.plain)
+        }
+    }
+}
+
+struct MathBasicsHomeView: View {
+    var body: some View {
+        CategoryScreen {
+            NavigationLink(destination: MathFlashcardsView()) {
+                CategoryCard(
+                    title: "Math Basics",
+                    subtitle: "Add, subtract, multiply, divide",
+                    emoji: "🧮",
+                    colors: [Color(red: 0.18, green: 0.58, blue: 0.42),
+                             Color(red: 0.42, green: 0.32, blue: 0.78)]
+                )
+            }
+            .buttonStyle(.plain)
         }
     }
 }

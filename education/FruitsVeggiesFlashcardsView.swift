@@ -38,11 +38,19 @@ private let fruitsVeggiesCards: [FruitsVeggiesCard] = [
 
 struct FruitsVeggiesFlashcardsView: View {
     @State private var currentIndex = 0
+    @State private var showCelebration = false
     @StateObject private var speech = SpeechManager()
     @Environment(\.dismiss) private var dismiss
 
     private func speakCard(_ index: Int) {
         speech.speak(fruitsVeggiesCards[index].name)
+    }
+
+    private func celebrate() {
+        withAnimation(.spring(response: 0.5, dampingFraction: 0.7)) { showCelebration = true }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+            withAnimation(.easeOut(duration: 0.4)) { showCelebration = false }
+        }
     }
 
     var body: some View {
@@ -56,7 +64,10 @@ struct FruitsVeggiesFlashcardsView: View {
             .tabViewStyle(.page(indexDisplayMode: .never))
             .ignoresSafeArea()
             .onAppear { speakCard(0) }
-            .onChange(of: currentIndex) { _, newIndex in speakCard(newIndex) }
+            .onChange(of: currentIndex) { _, newIndex in
+                speakCard(newIndex)
+                if newIndex == fruitsVeggiesCards.count - 1 { celebrate() }
+            }
 
             HStack {
                 Spacer()
@@ -88,6 +99,9 @@ struct FruitsVeggiesFlashcardsView: View {
             }
             .padding(.top, 56)
             .padding(.leading, 20)
+        }
+        .overlay {
+            CelebrationOverlay(isShowing: showCelebration)
         }
     }
 }
