@@ -17,6 +17,21 @@ struct ContentView: View {
                 .tabItem {
                     Label("Math Basics", systemImage: "plus.forwardslash.minus")
                 }
+
+            PhysicsBasicsHomeView()
+                .tabItem {
+                    Label("Physics Basics", systemImage: "bolt.fill")
+                }
+
+            ChemistryBasicsHomeView()
+                .tabItem {
+                    Label("Chemistry Basics", systemImage: "testtube.2")
+                }
+
+            BiologyBasicsHomeView()
+                .tabItem {
+                    Label("Biology Basics", systemImage: "leaf.fill")
+                }
         }
     }
 }
@@ -173,6 +188,39 @@ struct BasicsView: View {
                 )
             }
             .buttonStyle(.plain)
+
+            NavigationLink(destination: HistoryFlashcardsView()) {
+                CategoryCard(
+                    title: "History Basics",
+                    subtitle: "Famous people",
+                    emoji: "🏛️",
+                    colors: [Color(red: 0.62, green: 0.48, blue: 0.15),
+                             Color(red: 0.42, green: 0.32, blue: 0.28)]
+                )
+            }
+            .buttonStyle(.plain)
+
+            NavigationLink(destination: GeographyFlashcardsView()) {
+                CategoryCard(
+                    title: "Geography Basics",
+                    subtitle: "24 countries & capitals",
+                    emoji: "🌍",
+                    colors: [Color(red: 0.18, green: 0.48, blue: 0.78),
+                             Color(red: 0.22, green: 0.62, blue: 0.42)]
+                )
+            }
+            .buttonStyle(.plain)
+
+            NavigationLink(destination: CivicsFlashcardsView()) {
+                CategoryCard(
+                    title: "Civics Basics",
+                    subtitle: "Flag, voting, community",
+                    emoji: "🗳️",
+                    colors: [Color(red: 0.72, green: 0.22, blue: 0.28),
+                             Color(red: 0.22, green: 0.42, blue: 0.68)]
+                )
+            }
+            .buttonStyle(.plain)
         }
     }
 }
@@ -187,6 +235,57 @@ struct MathBasicsHomeView: View {
                     emoji: "🧮",
                     colors: [Color(red: 0.18, green: 0.58, blue: 0.42),
                              Color(red: 0.42, green: 0.32, blue: 0.78)]
+                )
+            }
+            .buttonStyle(.plain)
+        }
+    }
+}
+
+struct PhysicsBasicsHomeView: View {
+    var body: some View {
+        CategoryScreen {
+            NavigationLink(destination: PhysicsFlashcardsView()) {
+                CategoryCard(
+                    title: "Physics Basics",
+                    subtitle: "Push, pull, gravity & more",
+                    emoji: "🧲",
+                    colors: [Color(red: 0.22, green: 0.55, blue: 0.82),
+                             Color(red: 0.42, green: 0.32, blue: 0.78)]
+                )
+            }
+            .buttonStyle(.plain)
+        }
+    }
+}
+
+struct ChemistryBasicsHomeView: View {
+    var body: some View {
+        CategoryScreen {
+            NavigationLink(destination: ChemistryFlashcardsView()) {
+                CategoryCard(
+                    title: "Chemistry Basics",
+                    subtitle: "Solid, liquid, gas & more",
+                    emoji: "🧪",
+                    colors: [Color(red: 0.18, green: 0.62, blue: 0.78),
+                             Color(red: 0.42, green: 0.68, blue: 0.32)]
+                )
+            }
+            .buttonStyle(.plain)
+        }
+    }
+}
+
+struct BiologyBasicsHomeView: View {
+    var body: some View {
+        CategoryScreen {
+            NavigationLink(destination: BiologyFlashcardsView()) {
+                CategoryCard(
+                    title: "Biology Basics",
+                    subtitle: "Living things & the five senses",
+                    emoji: "🌱",
+                    colors: [Color(red: 0.22, green: 0.62, blue: 0.32),
+                             Color(red: 0.62, green: 0.32, blue: 0.72)]
                 )
             }
             .buttonStyle(.plain)
