@@ -12,26 +12,6 @@ struct ContentView: View {
                 .tabItem {
                     Label("Basics", systemImage: "square.grid.2x2.fill")
                 }
-
-            MathBasicsHomeView()
-                .tabItem {
-                    Label("Math Basics", systemImage: "plus.forwardslash.minus")
-                }
-
-            PhysicsBasicsHomeView()
-                .tabItem {
-                    Label("Physics Basics", systemImage: "bolt.fill")
-                }
-
-            ChemistryBasicsHomeView()
-                .tabItem {
-                    Label("Chemistry Basics", systemImage: "testtube.2")
-                }
-
-            BiologyBasicsHomeView()
-                .tabItem {
-                    Label("Biology Basics", systemImage: "leaf.fill")
-                }
         }
     }
 }
@@ -69,10 +49,10 @@ struct CategoryScreen<Content: View>: View {
 
                     // Scrollable category cards
                     ScrollView(showsIndicators: false) {
-                        VStack(spacing: 18) {
+                        LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible())], spacing: 16) {
                             content
                         }
-                        .padding(.horizontal, 28)
+                        .padding(.horizontal, 24)
                         .padding(.bottom, 24)
                     }
 
@@ -221,13 +201,18 @@ struct BasicsView: View {
                 )
             }
             .buttonStyle(.plain)
-        }
-    }
-}
 
-struct MathBasicsHomeView: View {
-    var body: some View {
-        CategoryScreen {
+            NavigationLink(destination: SocialSkillsFlashcardsView()) {
+                CategoryCard(
+                    title: "Manners & Feelings",
+                    subtitle: "Kindness & emotions",
+                    emoji: "🤝",
+                    colors: [Color(red: 0.22, green: 0.58, blue: 0.68),
+                             Color(red: 0.72, green: 0.42, blue: 0.18)]
+                )
+            }
+            .buttonStyle(.plain)
+
             NavigationLink(destination: MathFlashcardsView()) {
                 CategoryCard(
                     title: "Math Basics",
@@ -238,13 +223,7 @@ struct MathBasicsHomeView: View {
                 )
             }
             .buttonStyle(.plain)
-        }
-    }
-}
 
-struct PhysicsBasicsHomeView: View {
-    var body: some View {
-        CategoryScreen {
             NavigationLink(destination: PhysicsFlashcardsView()) {
                 CategoryCard(
                     title: "Physics Basics",
@@ -255,13 +234,7 @@ struct PhysicsBasicsHomeView: View {
                 )
             }
             .buttonStyle(.plain)
-        }
-    }
-}
 
-struct ChemistryBasicsHomeView: View {
-    var body: some View {
-        CategoryScreen {
             NavigationLink(destination: ChemistryFlashcardsView()) {
                 CategoryCard(
                     title: "Chemistry Basics",
@@ -272,13 +245,7 @@ struct ChemistryBasicsHomeView: View {
                 )
             }
             .buttonStyle(.plain)
-        }
-    }
-}
 
-struct BiologyBasicsHomeView: View {
-    var body: some View {
-        CategoryScreen {
             NavigationLink(destination: BiologyFlashcardsView()) {
                 CategoryCard(
                     title: "Biology Basics",
@@ -286,6 +253,17 @@ struct BiologyBasicsHomeView: View {
                     emoji: "🌱",
                     colors: [Color(red: 0.22, green: 0.62, blue: 0.32),
                              Color(red: 0.62, green: 0.32, blue: 0.72)]
+                )
+            }
+            .buttonStyle(.plain)
+
+            NavigationLink(destination: TellingTimeFlashcardsView()) {
+                CategoryCard(
+                    title: "Telling Time",
+                    subtitle: "Clocks & half hours",
+                    emoji: "🕐",
+                    colors: [Color(red: 0.22, green: 0.48, blue: 0.78),
+                             Color(red: 0.62, green: 0.32, blue: 0.68)]
                 )
             }
             .buttonStyle(.plain)
@@ -307,26 +285,32 @@ struct CategoryCard: View {
     let colors: [Color]
 
     var body: some View {
-        HStack(spacing: 0) {
-            VStack(alignment: .leading, spacing: 8) {
-                Text(title)
-                    .font(.system(size: 36, weight: .black, design: .rounded))
-                    .foregroundStyle(.white)
-                Text(subtitle)
-                    .font(.system(size: 20, weight: .bold, design: .rounded))
-                    .foregroundStyle(.white.opacity(0.82))
-            }
-            Spacer()
+        VStack(spacing: 10) {
             Text(emoji)
-                .font(.system(size: 64))
+                .font(.system(size: 46))
+
+            Text(title)
+                .font(.system(size: 19, weight: .black, design: .rounded))
+                .foregroundStyle(.white)
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
+                .minimumScaleFactor(0.8)
+
+            Text(subtitle)
+                .font(.system(size: 13, weight: .semibold, design: .rounded))
+                .foregroundStyle(.white.opacity(0.82))
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
+                .minimumScaleFactor(0.85)
         }
-        .padding(.horizontal, 26)
-        .padding(.vertical, 24)
+        .frame(maxWidth: .infinity, minHeight: 160)
+        .padding(.horizontal, 12)
+        .padding(.vertical, 18)
         .background(
             LinearGradient(colors: colors, startPoint: .topLeading, endPoint: .bottomTrailing)
         )
-        .clipShape(RoundedRectangle(cornerRadius: 26))
-        .shadow(color: colors[0].opacity(0.35), radius: 12, x: 0, y: 5)
+        .clipShape(RoundedRectangle(cornerRadius: 24))
+        .shadow(color: colors[0].opacity(0.35), radius: 10, x: 0, y: 4)
     }
 }
 
