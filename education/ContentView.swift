@@ -267,6 +267,28 @@ struct BasicsView: View {
                 )
             }
             .buttonStyle(.plain)
+
+            NavigationLink(destination: MoneyFlashcardsView()) {
+                CategoryCard(
+                    title: "Money Basics",
+                    subtitle: "Penny, nickel, dime, quarter",
+                    emoji: "🪙",
+                    colors: [Color(red: 0.62, green: 0.38, blue: 0.22),
+                             Color(red: 0.22, green: 0.55, blue: 0.52)]
+                )
+            }
+            .buttonStyle(.plain)
+
+            NavigationLink(destination: HolidaysFlashcardsView()) {
+                CategoryCard(
+                    title: "Holidays",
+                    subtitle: "Celebrations all year long",
+                    emoji: "🎉",
+                    colors: [Color(red: 0.72, green: 0.22, blue: 0.28),
+                             Color(red: 0.18, green: 0.58, blue: 0.42)]
+                )
+            }
+            .buttonStyle(.plain)
         }
     }
 }
